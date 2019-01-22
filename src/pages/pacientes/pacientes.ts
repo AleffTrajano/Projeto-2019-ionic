@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { PacienteService } from '../../services/domain/paciente.service';
+import { PacienteDTO } from '../../models/paciente.dto';
+import { APP_CONFIG } from '../../config/api.config';
 
 /**
  * Generated class for the PacientesPage page.
@@ -15,11 +18,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PacientesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  bucketUrl: string = APP_CONFIG.bucketBaseUrl;
+
+  items: PacienteDTO[];
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public pacienteService:PacienteService ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PacientesPage');
+    this.pacienteService.findAll()
+    .subscribe(response =>{
+      this.items = response;
+    },
+    
+    error => {});
+  
   }
-
 }
