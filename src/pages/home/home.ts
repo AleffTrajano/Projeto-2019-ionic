@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, Menu, MenuController } from 'ionic-angular';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
+import { AuthService } from '../../services/auth-service';
+
 
 @IonicPage()
 @Component({
@@ -14,11 +16,13 @@ export class HomePage {
         senha: ""
       };
 
-
-  constructor(public navCtrl: NavController, public menu: MenuController) {
-
-  }
-
+      constructor(
+        public navCtrl: NavController, 
+        public menu: MenuController,
+        public auth: AuthService) {
+    
+      }
+  
   ionViewWillEnter() {
       this.menu.swipeEnable(false);
   }
@@ -26,8 +30,12 @@ export class HomePage {
       this.menu.swipeEnable(true);
   }
   login(){
-      console.log(this.creds);
+    this.auth.authenticate(this.creds)
+    .subscribe(response => {
+      console.log(response.headers.get('Authorization'));
       this.navCtrl.setRoot('PacientesPage');
+    },
+    error => {});    
   }
 
 }
