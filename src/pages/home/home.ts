@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, Menu, MenuController } from 'ionic-angular';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
-import { AuthService } from '../../services/auth-service';
+import { AuthService } from '../../services/auth.service';
 
 
 @IonicPage()
@@ -22,7 +22,7 @@ export class HomePage {
         public auth: AuthService) {
     
       }
-  
+
   ionViewWillEnter() {
       this.menu.swipeEnable(false);
   }
@@ -32,7 +32,7 @@ export class HomePage {
   login(){
     this.auth.authenticate(this.creds)
     .subscribe(response => {
-      console.log(response.headers.get('Authorization'));
+      this.auth.successfulLogin(response.headers.get('Authorization'));
       this.navCtrl.setRoot('PacientesPage');
     },
     error => {});    

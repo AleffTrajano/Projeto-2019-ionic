@@ -6,8 +6,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { PacienteService } from '../services/domain/paciente.service';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptors';
-import { AuthService } from '../services/auth-service';
-
+import { AuthService } from '../services/auth.service';
+import { StorageService } from '../services/storage.service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -34,7 +34,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PacienteService,
     ErrorInterceptorProvider,
-    AuthService
+    AuthService,
+    StorageService
   ]
 })
 export class AppModule {}
